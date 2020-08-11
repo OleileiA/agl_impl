@@ -88,7 +88,6 @@ public class BinarySearchTree {
         else pp.right = child;
     }
 
-
     /* 自己实现一遍delete */
     public void delete2(int data) {
         Node father_p = null; // 当前节点的父节点
@@ -134,7 +133,6 @@ public class BinarySearchTree {
         else if (father_p.left == p) father_p.left = child;
         else father_p.right = child;
     }
-
 
     private class Node {
         private int data;
