@@ -88,6 +88,54 @@ public class BinarySearchTree {
         else pp.right = child;
     }
 
+
+    /* 自己实现一遍delete */
+    public void delete2(int data) {
+        Node father_p = null; // 当前节点的父节点
+        Node p = tree;  // 当前节点
+
+        while (p != null && p.data != data) {
+            father_p = p;
+            if (data > p.data) p = p.right;
+            else p = p.left;
+        }
+        if (p == null) return; // 没有找到
+
+
+        /*
+        * 当搜索的到目标节点左右两边都有子树的情况下
+        *
+        * 备注：当前节点左右都有子树要和其他情况区分开的原因是：
+        * 只有一边子树的时候直接使用子树替换节点就行了。
+        * 都有子树需要把右子树的最小节点替换当前节点，维持二叉树，如果也直接替换，那么右子树的左节点和当前节点的左子树冲突了。（想象一下那个画面）
+         *  */
+        if (p.left != null && p.right != null) {
+            Node minFather = p;
+            Node min = p.right;
+            while (min.left != null) {
+                minFather = min;
+                min = min.left;
+            }
+            p.data = min.data; // 注意这里，直接交换值，不需要交换元素
+
+            // 重新设置father_p和p准备删除
+            father_p = minFather;
+            p = min;
+        }
+
+        // 当前节点是叶子节点或者只有一个边子树
+        Node child;
+        if (p.left != null) child = p.left;
+        else if (p.right != null) child = p.right;
+        else child = null; // 没有子节点
+
+        // 注意这里的赋值行为直接删除了p
+        if (father_p == null) tree = child;
+        else if (father_p.left == p) father_p.left = child;
+        else father_p.right = child;
+    }
+
+
     private class Node {
         private int data;
         private Node left;
@@ -141,12 +189,12 @@ public class BinarySearchTree {
         binarySearchTree.insert(5);
         binarySearchTree.insert(6);
 
-        binarySearchTree.delete(3);
-        binarySearchTree.delete(6);
-        binarySearchTree.delete(5);
-//        binarySearchTree.delete(4);
-//        binarySearchTree.delete(1);
-//        binarySearchTree.delete(2);
+        binarySearchTree.delete2(3);
+        binarySearchTree.delete2(6);
+        binarySearchTree.delete2(5);
+        binarySearchTree.delete2(4);
+        binarySearchTree.delete2(1);
+//        binarySearchTree.delete2(2);
         System.out.print(binarySearchTree);
     }
 }
