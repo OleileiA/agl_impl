@@ -98,12 +98,12 @@ public class AVLTree<E extends Comparable<E>> {
 
         // LL
         if (balanceFactor > 1 && getBalanceFactor(node.left) > 0) {
-            return leftRotate(node);
+            return rightRotate(node);
         }
 
         // RR
         if (balanceFactor < -1 && getBalanceFactor(node.right) < 0) {
-            return rightRotate(node);
+            return leftRotate(node);
         }
 
         // LR
@@ -113,7 +113,7 @@ public class AVLTree<E extends Comparable<E>> {
         }
 
         // RL
-        if (balanceFactor < -1 && getBalanceFactor(node.right) < 0) {
+        if (balanceFactor < -1 && getBalanceFactor(node.right) > 0) {
             node.right = rightRotate(node.right);
             return leftRotate(node);
         }
@@ -136,10 +136,13 @@ public class AVLTree<E extends Comparable<E>> {
         if (data.compareTo(node.data) > 0) {
             node.right = delete(node.right, data);
             saveNode = node;
-        } else if (data.compareTo(node.data) < 0) {
+        }
+        else if (data.compareTo(node.data) < 0) {
             node.left = delete(node.left, data);
             saveNode = node;
-        } else { // 找到了节点，开始正常的二叉树删除逻辑
+        }
+        else {
+            // 找到了节点，开始正常的二叉树删除逻辑
             if (node.left == null){
                 Node rightNode = node.right;
                 node.right = null;
@@ -147,12 +150,13 @@ public class AVLTree<E extends Comparable<E>> {
                 saveNode = rightNode;
             }
             // 待删除节点右子树为空的情况
-            else if (node.right == null){
+            else if (node.right == null) {
                 Node leftNode = node.left;
                 node.left = null;
                 size --;
                 saveNode = leftNode;
-            }else {
+            }
+            else {
                 Node min = findMinNode(node.right);
                 min.right = delete(node.right, min.data);
                 min.left = node.left;
@@ -171,12 +175,12 @@ public class AVLTree<E extends Comparable<E>> {
 
         // LL
         if (balanceFactor > 1 && getBalanceFactor(saveNode.left) > 0) {
-            return leftRotate(saveNode);
+            return rightRotate(saveNode);
         }
 
         // RR
         if (balanceFactor < -1 && getBalanceFactor(node.right) < 0) {
-            return rightRotate(saveNode);
+            return leftRotate(saveNode);
         }
 
         // LR
@@ -186,7 +190,7 @@ public class AVLTree<E extends Comparable<E>> {
         }
 
         // RL
-        if (balanceFactor < -1 && getBalanceFactor(saveNode.right) < 0) {
+        if (balanceFactor < -1 && getBalanceFactor(saveNode.right) > 0) {
             node.right = rightRotate(saveNode.right);
             return leftRotate(saveNode);
         }
@@ -218,6 +222,42 @@ public class AVLTree<E extends Comparable<E>> {
     }
 
     public static void main(String[] args) {
+        AVLTree<Integer> avlTree = new AVLTree<>();
 
+        avlTree.add(5);
+        avlTree.add(4);
+        avlTree.add(3);
+        avlTree.add(2);
+        avlTree.add(1);
+        avlTree.add(6);
+        avlTree.add(7);
+        avlTree.add(8);
+        avlTree.add(9);
+
+//        avlTree.delete(5);
+//        avlTree.delete(4);
+//        avlTree.delete(2);
+//        avlTree.delete(3);
+//        avlTree.delete(1);
+//        avlTree.delete(6);
+//        avlTree.delete(7);
+//        avlTree.delete(8);
+//        avlTree.delete(9);
+
+        System.out.println(avlTree);
+    }
+
+
+    private void preOrder(Node node) {
+        if (node == null) return;
+        System.out.println(node.data);
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+
+    @Override
+    public String toString() {
+        preOrder(root);
+        return "end";
     }
 }
