@@ -102,7 +102,7 @@ public class AVLTree<E extends Comparable<E>> {
         }
 
         // RR
-        if (balanceFactor < 1 && getBalanceFactor(node.right) < 0) {
+        if (balanceFactor < -1 && getBalanceFactor(node.right) < 0) {
             return rightRotate(node);
         }
 
@@ -113,13 +113,92 @@ public class AVLTree<E extends Comparable<E>> {
         }
 
         // RL
-        if (balanceFactor < 1 && getBalanceFactor(node.right) < 0) {
+        if (balanceFactor < -1 && getBalanceFactor(node.right) < 0) {
             node.right = rightRotate(node.right);
             return leftRotate(node);
         }
+
         return node;
     }
 
+    // 删除节点
+    public E delete(E data) {
+        Node node = delete(root, data);
+        if (node == null) return null;
+        return node.data;
+    }
+
+    // 思路和add类似，利用递归
+    private Node delete(Node node, E data) {
+        if (node == null) return null;
+
+        Node saveNode;
+        if (data.compareTo(node.data) > 0) {
+            node.right = delete(node.right, data);
+            saveNode = node;
+        } else if (data.compareTo(node.data) < 0) {
+            node.left = delete(node.left, data);
+            saveNode = node;
+        } else { // 找到了节点，开始正常的二叉树删除逻辑
+            if (node.left == null){
+                Node rightNode = node.right;
+                node.right = null;
+                size --;
+                saveNode = rightNode;
+            }
+            // 待删除节点右子树为空的情况
+            else if (node.right == null){
+                Node leftNode = node.left;
+                node.left = null;
+                size --;
+                saveNode = leftNode;
+            }else {
+                Node min = findMinNode(node.right);
+                min.right = delete(node.right, min.data);
+                min.left = node.left;
+                node.left = node.right = null;
+                saveNode = min;
+            }
+        }
+
+        if (saveNode == null) return null;
+
+        // 更新年height
+        saveNode.height = Math.max(getHeight(saveNode.left), getHeight(saveNode.right)) + 1;
+
+        /* ----- 调整逻辑 ------ */
+        int balanceFactor = getBalanceFactor(saveNode);
+
+        // LL
+        if (balanceFactor > 1 && getBalanceFactor(saveNode.left) > 0) {
+            return leftRotate(saveNode);
+        }
+
+        // RR
+        if (balanceFactor < -1 && getBalanceFactor(node.right) < 0) {
+            return rightRotate(saveNode);
+        }
+
+        // LR
+        if (balanceFactor > 1 && getBalanceFactor(node.left) < 0) {
+            saveNode.left = leftRotate(saveNode.left);
+            return rightRotate(saveNode);
+        }
+
+        // RL
+        if (balanceFactor < -1 && getBalanceFactor(saveNode.right) < 0) {
+            node.right = rightRotate(saveNode.right);
+            return leftRotate(saveNode);
+        }
+
+        return saveNode;
+    }
+
+    //二叉搜索树的最小值一直找左孩子就行了
+    private Node findMinNode(Node node){
+        if(node.left == null) return node;
+        return findMinNode(node.left);
+    }
 
     /*
      * AVL树节点的实现，最大的特点是带有height字段
