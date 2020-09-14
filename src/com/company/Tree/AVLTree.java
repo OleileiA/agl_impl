@@ -14,6 +14,22 @@ public class AVLTree<E extends Comparable<E>> {
         size = 0;
     }
 
+    /*
+     * AVL树节点的实现，最大的特点是带有height字段
+     *  */
+    private class Node {
+        private E data;
+        private Node left;
+        private Node right;
+        private int height; // 表示节点所在的高度, 为了方便计算平衡因子
+        public Node(E data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+            this.height = 1;
+        }
+    }
+
     public int getSize() {
         return size;
     }
@@ -80,7 +96,6 @@ public class AVLTree<E extends Comparable<E>> {
 
     private Node add(Node node, E data) {
         /*----- 增加逻辑 -----*/
-
         if (node == null) { // 终止条件，找到了根上，可以插入了。
             size++;
             return new Node(data);
@@ -90,7 +105,7 @@ public class AVLTree<E extends Comparable<E>> {
         else
             node.left = add(node.left, data);
 
-        // 更新年height
+        // 更新height
         node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
 
         /* ----- 调整逻辑 ------ */
@@ -134,27 +149,22 @@ public class AVLTree<E extends Comparable<E>> {
         if (data.compareTo(node.data) > 0) {
             node.right = delete(node.right, data);
             saveNode = node;
-        }
-        else if (data.compareTo(node.data) < 0) {
+        } else if (data.compareTo(node.data) < 0) {
             node.left = delete(node.left, data);
             saveNode = node;
-        }
-        else {
+        } else {
             // 找到了节点，开始正常的二叉树删除逻辑
             if (node.left == null) {
                 Node rightNode = node.right;
                 node.right = null;
                 size --;
                 saveNode = rightNode;
-            }
-            // 待删除节点右子树为空的情况
-            else if (node.right == null) {
+            } else if (node.right == null) { // 待删除节点右子树为空的情况
                 Node leftNode = node.left;
                 node.left = null;
                 size --;
                 saveNode = leftNode;
-            }
-            else {
+            } else {
                 Node min = findMinNode(node.right);
                 min.right = delete(node.right, min.data);
                 min.left = node.left;
@@ -202,22 +212,6 @@ public class AVLTree<E extends Comparable<E>> {
         return findMinNode(node.left);
     }
 
-    /*
-     * AVL树节点的实现，最大的特点是带有height字段
-     *  */
-    private class Node {
-        private E data;
-        private Node left;
-        private Node right;
-        private int height; // 表示节点所在的高度, 为了方便计算平衡因子
-
-        public Node(E data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-            this.height = 1;
-        }
-    }
     private void preOrder(Node node) {
         if (node == null) return;
         System.out.println(node.data);
