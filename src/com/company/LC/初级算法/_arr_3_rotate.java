@@ -30,4 +30,35 @@ public class _arr_3_rotate {
             n++;
         }
     }
+
+    // 反转法
+    // 假设数组为[1, 2, 3, 4, 5, 6, 7], k = 4
+    // 1. 现将数组全部翻转[7, 6, 5, 4, 3, 2, 1]
+    // 2. 现将前k个元素翻转：[4, 5, 6, 7, 3, 2, 1]
+    // 3. 再讲剩下的元素翻转你: [4, 5, 6, 7, 1, 2, 3]
+
+    // 时间复杂度: 数组整体上翻转了2次, O(n)
+    // 空间复杂度: 没有使用额外的空间O(1)
+    public void rotate2(int[] nums, int k) {
+        k %= nums.length;
+        reverse(nums, 0, nums.length - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, nums.length - 1);
+    }
+    private void reverse(int[] nums, int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
+
+    // 环状替代法
+    // 比起暴力法，就是直接走到目标位置的算法，省略中间的移动过程
+    public void rotate3(int[] nums, int k) {
+
+    }
 }

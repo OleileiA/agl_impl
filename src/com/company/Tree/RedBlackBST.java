@@ -2,6 +2,8 @@ package com.company.Tree;
 
 public class RedBlackBST <Key extends Comparable<Key>, Value> {
 
+    private Node root;
+
     // 定义颜色
     private static final boolean RED = true;
     private static final boolean BLACK = false;
@@ -9,7 +11,7 @@ public class RedBlackBST <Key extends Comparable<Key>, Value> {
     // 节点
     private class Node {
         Key key;
-        Value value;
+        Value val;
         int N; // 这个子树的节点总数
         Node left;
         Node right;
@@ -17,7 +19,7 @@ public class RedBlackBST <Key extends Comparable<Key>, Value> {
 
         Node (Key key, Value value, int N, boolean color) {
             this.key = key;
-            this.value = value;
+            this.val = value;
             this.N = N;
             this.color = color;
         }
@@ -65,4 +67,27 @@ public class RedBlackBST <Key extends Comparable<Key>, Value> {
         h.right.color = BLACK;
     }
 
+    // 放入新的元素
+    public void put(Key key, Value value) {
+        root = put(root, key, value);
+        root.color = BLACK;
+    }
+
+    // 内部实现(非常漂亮的递归， 我想把红黑树的实现背下来)
+    private Node put(Node h, Key key, Value val) {
+
+        if (h == null) return new Node(key, val, 1, RED);
+        int cmp = key.compareTo(h.key);
+        if (cmp < 0) h.left = put(h.left, key, val);
+        if (cmp > 0) h.right = put(h.right, key, val);
+        else h.val = val;
+
+        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
+        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+        if (isRed(h.left) && isRed(h.right)) flipColors(h);
+
+        h.N = size(h.left) + size(h.right) + 1;
+
+        return h;
+    }
 }
