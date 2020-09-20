@@ -59,6 +59,29 @@ public class _arr_3_rotate {
     // 环状替代法
     // 比起暴力法，就是直接走到目标位置的算法，省略中间的移动过程
     public void rotate3(int[] nums, int k) {
+        int len = nums.length;
+        k = k % len;
+        int count = 0; // 记录交换的次数，n个人就交换n次
 
+        for (int start = 0; count < len; start++) {
+            System.out.println("start {}" + start);
+            int cur = start; // 当前准备换座位的元素下标
+            int pre = nums[cur]; // 被挑出来准备换位置的元素
+
+            do {
+                int next = (cur + k) % len;
+                int temp = nums[next]; // 被换座位的人起立，保存在临时变量
+                nums[next] = pre; // 换了
+                pre = temp;
+                cur = next;
+                count++;
+                System.out.println("start:" + start + "cur:" + cur);
+            } while (start != cur);
+        }
+    }
+
+    public static void main(String[] args) {
+        _arr_3_rotate rot = new _arr_3_rotate();
+        rot.rotate3(new int[] {1, 2, 3, 4}, 2);
     }
 }
