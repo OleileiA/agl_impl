@@ -1,4 +1,4 @@
-package com.company.LC.初级算法;
+package com.company.LC.初级算法.arr;
 
 import java.util.HashSet;
 import java.util.Set;
