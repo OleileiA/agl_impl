@@ -48,10 +48,8 @@ public class StrStr {
         return next;
     }
 
-
     public static void main(String[] args) {
         StrStr strStr = new StrStr();
         System.out.println(strStr.strStr("abeabcabcd", "abc"));
     }
-
 }
