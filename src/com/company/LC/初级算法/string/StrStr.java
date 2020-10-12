@@ -43,8 +43,7 @@ public class StrStr {
                 i++;
                 j++;
                 next[i] = j;
-            }
-            else j = next[j];
+            } else j = next[j];
         }
         return next;
     }
