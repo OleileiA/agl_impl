@@ -10,7 +10,7 @@ public class MaxDepth {
         else {
             int leftNum = maxDepth(root.left);
             int rightNum = maxDepth(root.right);
-            return Math.max(leftNum,  rightNum) + 1;
+            return Math.max(leftNum, rightNum) + 1;
         }
     }
 }
