@@ -11,7 +11,7 @@ package com.company.Inaction.Array;
 * */
 public class MoveZeros {
     public void moveZeroes(int[] nums) {
-        // j再循环的时候同步下标，如果发现等于0的地方j将停留
+        // j在循环的时候同步下标，如果发现等于0的地方j将停留
         int j = 0;
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] != 0) {
