@@ -7,7 +7,6 @@ https://leetcode-cn.com/problems/linked-list-cycle-ii/
 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。
 如果 pos 是 -1，则在该链表中没有环。注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。
 
-
 * */
 public class CycleListII {
     public ListNode detectCycle(ListNode head) {
