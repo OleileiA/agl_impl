@@ -13,6 +13,8 @@ https://leetcode-cn.com/problems/remove-element/
 
 * */
 public class RemoveElement {
+
+    // 排序实现
     public int removeElement(int[] nums, int val) {
         Arrays.sort(nums);
         int n = 0;
@@ -25,5 +27,17 @@ public class RemoveElement {
             }
         }
         return nums.length - n;
+    }
+
+    // 双指针, 和消除数组重复项的道理相同
+    public int removeElement2(int[] nums, int val) {
+        int i = 0;
+        for (int j = 0; j < nums.length; j++) {
+            if (nums[j] != val) {
+                nums[i] = nums[j];
+                i++;
+            }
+        }
+        return i;
     }
 }
