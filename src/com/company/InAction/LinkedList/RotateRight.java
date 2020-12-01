@@ -13,31 +13,6 @@ package com.company.InAction.LinkedList;
 * */
 public class RotateRight {
     public ListNode rotateRight(ListNode head, int k) {
-
-        if (head == null) return null;
-        if (head.next == null) return head;
-
-        ListNode tail = head;
-        int len = 1;
-        while (tail.next != null) {
-            tail = tail.next;
-            len++;
-        }
-        k %= len;
-
-        if (k == 0) return head;
-        ListNode p = head;
-        while (k > 1) {
-            p = p.next;
-            k--;
-        }
-        ListNode result = p.next;
-        p.next = null;
-        tail.next = head;
-        return result;
-    }
-
-    public ListNode rotateRight2(ListNode head, int k) {
         // base cases
         if (head == null) return null;
         if (head.next == null) return head;
