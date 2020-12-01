@@ -1,4 +1,4 @@
-package com.company.InAction;
+package com.company.InAction.SkipList;
 
 /*
 * 跳表实现
