@@ -15,7 +15,10 @@ import java.util.List;
 public class ReverseList {
     // 遍历方式
     public ListNode reverseList(ListNode head) {
-        ListNode fir = null, sec = head;
+
+        ListNode fir = null;
+        ListNode sec = head;
+
         while (sec != null) {
             ListNode node = sec.next;
             sec.next = fir;
