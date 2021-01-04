@@ -9,7 +9,7 @@ public class StackAndQueue {
 
     // 判断字符串的括号是否成对匹配
     // '[][]{[]}'
-    public boolean ifPair(String s) {
+    public boolean isValid(String s) {
 
         int len = s.length();
         if (len % 2 == 1) return false;
