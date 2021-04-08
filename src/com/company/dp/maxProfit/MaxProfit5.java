@@ -1,4 +1,4 @@
-package com.company.dp_maxProfit;
+package com.company.dp.maxProfit;
 
 /*
 * 最佳买卖股票时机含冷冻期

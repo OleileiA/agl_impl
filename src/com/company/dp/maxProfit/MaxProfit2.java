@@ -1,4 +1,4 @@
-package com.company.dp_maxProfit;
+package com.company.dp.maxProfit;
 
 /*
 * 买卖股票的最佳时机2
